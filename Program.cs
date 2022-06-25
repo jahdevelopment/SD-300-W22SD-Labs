@@ -28,10 +28,11 @@ myVendingMachine.StockItem(product8, 10);
 myVendingMachine.StockItem(product9, 10);
 myVendingMachine.StockItem(product10, 10);
 
-myVendingMachine.GetCodeProduct();
+string selectedcode = myVendingMachine.GetCodeProduct();
+int paid = myVendingMachine.GetAmountOfPayment();
+myVendingMachine.EvaluateCode(selectedcode);
 
-//myVendingMachine.selectedCode = new SelectedCode;
-//Console.ReadLine();
+
 
 class VendingMachine
 {
@@ -46,7 +47,7 @@ class VendingMachine
 
     Dictionary<int, int> MoneyFloat = new Dictionary<int, int>();
 
-    
+    Dictionary<Product, int> Inventory = new Dictionary<Product, int>();
 
     public VendingMachine(int serialnumber)
     {
@@ -94,27 +95,55 @@ class VendingMachine
 
     public string GetCodeProduct()
     {
-        Console.WriteLine("Please insert the code of the product you want to buy:");
-        SelectedCode = Console.ReadLine();
+        string writedCode = "";
+            Console.WriteLine("Please insert the code of the product you want to buy:");
+            writedCode = (Console.ReadLine()).ToUpper();
+        
+        
+
+
         return SelectedCode;
     }
 
-    //public int GetAmountOfPayment()
-    //{
-    //    Console.WriteLine("Please insert the amount of payment:");
-    //    Payment.Add(Int32.Parse(Console.ReadLine()));
-    //    return Payment;
-    //}
+    public void EvaluateCode(string selectedcode)
+    {
+        foreach (var c in Inventory)
+        {
+            Console.WriteLine(c);
+            //if (c.Key.Code == selectedcode)
+            //{
+            //    Console.WriteLine($"You will buy: {c.Key.Name}");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("This product doesn't exist, please insert the correct code");
+            //}
+        }
+    }
+
+
+
+    public int GetAmountOfPayment()
+    {
+        int amount = 0;
+        Console.WriteLine("Please insert the amount of payment:");
+        Payment.Add(Int32.Parse(Console.ReadLine()));
+        foreach(var c in Payment)
+        {
+            amount = c;
+        }
+        Console.WriteLine($"you will pay with ${amount}");
+        return amount; 
+    }
 
     public string VendItem(string selectedCode, List<int> payment)
     {
         SelectedCode = selectedCode;
         Payment = payment;
         string transactionState = "";
+        int CostOfProduct = 0;
 
-        
-
-        Console.WriteLine(selectedCode);
+    
 
         //Console.WriteLine("Please insert the amount of payment:");
         //payment = Console.ReadLine();
